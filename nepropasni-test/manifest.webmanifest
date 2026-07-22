@@ -1,0 +1,17 @@
+{
+  "name": "Nepropásni – rodinný test",
+  "short_name": "Nepropásni",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f5fb",
+  "theme_color": "#6f4bd8",
+  "description": "Sdílený test rodinného kalendáře, nákupu a domácích úkolů.",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
