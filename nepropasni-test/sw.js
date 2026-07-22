@@ -1,4 +1,4 @@
-const CACHE='nepropasni-shared-v2';
+const CACHE='nepropasni-shared-v3';
 const ASSETS=['./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
@@ -6,11 +6,15 @@ self.addEventListener('install',event=>{
 });
 
 self.addEventListener('activate',event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
-      .then(()=>self.clients.claim())
-  );
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)));
+    await self.clients.claim();
+    const clients=await self.clients.matchAll({type:'window',includeUncontrolled:true});
+    for(const client of clients){
+      try{await client.navigate(client.url);}catch{}
+    }
+  })());
 });
 
 function repairSharedApp(html){
